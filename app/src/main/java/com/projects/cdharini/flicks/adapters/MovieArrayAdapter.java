@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 import static com.projects.cdharini.flicks.R.id.tvOverview;
 import static com.projects.cdharini.flicks.R.id.tvTitle;
 
@@ -30,44 +32,104 @@ public class MovieArrayAdapter extends ArrayAdapter<MovieData> {
         super(context, android.R.layout.simple_list_item_1, movies);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return getItem(position).getPopularity().ordinal();
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return MovieData.Popularity.values().length;
+    }
+
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         //get data
         MovieData movieData = getItem(position);
 
-        ViewHolder viewHolder;
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        RipeViewHolder ripeViewHolder = new RipeViewHolder();
+        RottenViewHolder rottenViewHolder = new RottenViewHolder();
+
+        int type = getItemViewType(position);
         //inflate view
         if (convertView == null) {
-            viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_movie, parent, false);
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
-            viewHolder.title = (TextView) convertView.findViewById(tvTitle);
-            viewHolder.overview = (TextView) convertView.findViewById(tvOverview);
-            convertView.setTag(viewHolder);
+
+            convertView = getInflatedViewForType(type);
+            switch (type) {
+                // ripe
+                case 0:
+                    ripeViewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+                    convertView.setTag(ripeViewHolder);
+                    break;
+                default:
+
+                rottenViewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+                rottenViewHolder.title = (TextView) convertView.findViewById(tvTitle);
+                rottenViewHolder.overview = (TextView) convertView.findViewById(tvOverview);
+                convertView.setTag(rottenViewHolder);
+                    break;
+            }
         } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            switch (type) {
+                case 0:
+                    ripeViewHolder = (RipeViewHolder) convertView.getTag();
+                    break;
+                default:
+                    rottenViewHolder = (RottenViewHolder) convertView.getTag();
+                break;
+            }
+
         }
 
-        //populate data via view holder
-        viewHolder.image.setImageResource(0);
-        viewHolder.title.setText(movieData.getOriginalTitle());
-        viewHolder.overview.setText(movieData.getOverview());
+        switch(type) {
+            case 0:
+                ripeViewHolder.image.setImageResource(0);
+                Picasso.with(getContext()).load(movieData.getFullBackdropPath()).fit()
+                        .centerInside().placeholder(R.mipmap.placeholder_img)
+                        .transform(new RoundedCornersTransformation(10, 10))
+                        .error(R.mipmap.placeholder_error_img).into(ripeViewHolder.image);
+                break;
+            default:
+            //populate data via view holder
+            rottenViewHolder.image.setImageResource(0);
+            rottenViewHolder.title.setText(movieData.getOriginalTitle());
+            rottenViewHolder.overview.setText(movieData.getOverview());
 
-        int orientation = getContext().getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Picasso.with(getContext()).load(movieData.getBackdropPath()).into(viewHolder.image);
-        } else {
-            Picasso.with(getContext()).load(movieData.getPosterPath()).into(viewHolder.image);
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                Picasso.with(getContext()).load(movieData.getBackdropPath())
+                        .transform(new RoundedCornersTransformation(10, 10))
+                        .placeholder(R.mipmap.placeholder_img)
+                        .error(R.mipmap.placeholder_error_img).into(rottenViewHolder.image);
+            } else {
+                Picasso.with(getContext()).load(movieData.getPosterPath())
+                        .placeholder(R.mipmap.placeholder_img)
+                        .transform(new RoundedCornersTransformation(10, 10))
+                        .error(R.mipmap.placeholder_error_img).into(rottenViewHolder.image);
+            }
+            break;
         }
+
 
         return convertView;
     }
 
-    static class ViewHolder {
+    private View getInflatedViewForType(int type){
+        if (type == MovieData.Popularity.RIPE.ordinal()) {
+            return LayoutInflater.from(getContext()).inflate(R.layout.item_movie_ripe, null);
+        } else {
+            return  LayoutInflater.from(getContext()).inflate(R.layout.item_movie_rotten, null);
+        }
+    }
+
+    static class RottenViewHolder {
         TextView title;
         TextView overview;
+        ImageView image;
+    }
+
+    static class RipeViewHolder {
         ImageView image;
     }
 }

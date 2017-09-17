@@ -1,4 +1,4 @@
-package com.projects.cdharini.flicks;
+package com.projects.cdharini.flicks.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.projects.cdharini.flicks.R;
 import com.projects.cdharini.flicks.adapters.MovieArrayAdapter;
 import com.projects.cdharini.flicks.models.MovieData;
 

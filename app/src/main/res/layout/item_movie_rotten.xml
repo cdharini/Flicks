@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/rounded_rectangle">
 
     <ImageView
         android:id="@+id/ivMovieImage"
@@ -20,7 +21,8 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:layout_toRightOf="@+id/ivMovieImage"
         android:layout_toEndOf="@+id/ivMovieImage"
-        tools:text="It" />
+        tools:text="It"
+        android:textColor="@color/colorPrimaryText"/>
 
     <TextView
         android:id="@+id/tvOverview"
@@ -29,5 +31,6 @@
         android:layout_below="@+id/tvTitle"
         android:layout_toEndOf="@+id/ivMovieImage"
         android:layout_toRightOf="@+id/ivMovieImage"
+        android:textColor="@color/colorPrimaryText"
         tools:text="In a small town in Maine, seven children known as The Losers Club come face to face with life problems, bullies and a monster that takes the shape of a clown called Pennywise" />
 </RelativeLayout>

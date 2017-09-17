@@ -19,11 +19,11 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 public class MovieDetailActivity extends AppCompatActivity {
     public static final String MOVIE_DATA_EXTRA = "extraMovieData";
 
-    ImageView ivPoster;
-    TextView tvMovieTitle;
-    TextView tvSynopsis;
-    RatingBar rbRatings;
-    TextView tvReleaseDate;
+    private ImageView ivPoster;
+    private TextView tvMovieTitle;
+    private TextView tvSynopsis;
+    private RatingBar rbRatings;
+    private TextView tvReleaseDate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

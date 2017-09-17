@@ -23,6 +23,7 @@ import static com.projects.cdharini.flicks.R.id.tvOverview;
 import static com.projects.cdharini.flicks.R.id.tvTitle;
 
 /**
+ * Movie adapter for ListView in MainActivity
  * Created by dharinic on 9/13/17.
  */
 
@@ -64,11 +65,11 @@ public class MovieArrayAdapter extends ArrayAdapter<MovieData> {
                     convertView.setTag(ripeViewHolder);
                     break;
                 default:
-
-                rottenViewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
-                rottenViewHolder.title = (TextView) convertView.findViewById(tvTitle);
-                rottenViewHolder.overview = (TextView) convertView.findViewById(tvOverview);
-                convertView.setTag(rottenViewHolder);
+                    // rotten movies are default views
+                    rottenViewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
+                    rottenViewHolder.title = (TextView) convertView.findViewById(tvTitle);
+                    rottenViewHolder.overview = (TextView) convertView.findViewById(tvOverview);
+                    convertView.setTag(rottenViewHolder);
                     break;
             }
         } else {
@@ -78,7 +79,7 @@ public class MovieArrayAdapter extends ArrayAdapter<MovieData> {
                     break;
                 default:
                     rottenViewHolder = (RottenViewHolder) convertView.getTag();
-                break;
+                    break;
             }
 
         }
@@ -92,23 +93,25 @@ public class MovieArrayAdapter extends ArrayAdapter<MovieData> {
                         .error(R.mipmap.placeholder_error_img).into(ripeViewHolder.image);
                 break;
             default:
-            //populate data via view holder
-            rottenViewHolder.image.setImageResource(0);
-            rottenViewHolder.title.setText(movieData.getOriginalTitle());
-            rottenViewHolder.overview.setText(movieData.getOverview());
+                //populate data via view holder
+                rottenViewHolder.image.setImageResource(0);
+                rottenViewHolder.title.setText(movieData.getOriginalTitle());
+                rottenViewHolder.overview.setText(movieData.getOverview());
 
-            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                Picasso.with(getContext()).load(movieData.getBackdropPath())
-                        .transform(new RoundedCornersTransformation(10, 10))
-                        .placeholder(R.mipmap.placeholder_img)
-                        .error(R.mipmap.placeholder_error_img).into(rottenViewHolder.image);
-            } else {
-                Picasso.with(getContext()).load(movieData.getPosterPath())
-                        .placeholder(R.mipmap.placeholder_img)
-                        .transform(new RoundedCornersTransformation(10, 10))
-                        .error(R.mipmap.placeholder_error_img).into(rottenViewHolder.image);
-            }
-            break;
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    Picasso.with(getContext()).load(movieData.getBackdropPath())
+                            .fit().centerInside()
+                            .transform(new RoundedCornersTransformation(10, 10))
+                            .placeholder(R.mipmap.placeholder_img)
+                            .error(R.mipmap.placeholder_error_img).into(rottenViewHolder.image);
+                } else {
+                    Picasso.with(getContext()).load(movieData.getPosterPath())
+                            .fit().centerInside()
+                            .placeholder(R.mipmap.placeholder_img)
+                            .transform(new RoundedCornersTransformation(10, 10))
+                            .error(R.mipmap.placeholder_error_img).into(rottenViewHolder.image);
+                }
+                break;
         }
 
 
@@ -124,12 +127,12 @@ public class MovieArrayAdapter extends ArrayAdapter<MovieData> {
     }
 
     static class RottenViewHolder {
-        TextView title;
-        TextView overview;
-        ImageView image;
+        public TextView title;
+        public TextView overview;
+        public ImageView image;
     }
 
     static class RipeViewHolder {
-        ImageView image;
+        public ImageView image;
     }
 }

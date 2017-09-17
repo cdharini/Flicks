@@ -21,18 +21,30 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Main activity that displays a list of now playing movies
+ * Launches MovieDetailActivity when user clicks list item
+ */
 public class MainActivity extends AppCompatActivity {
-    MovieArrayAdapter movieAdapter;
-    ListView lvMovies;
-    ArrayList<MovieData> moviesData;
+
+    private MovieArrayAdapter movieAdapter;
+    private ListView lvMovies;
+    private ArrayList<MovieData> moviesData;
+
+    // URL to fetch now playing movies
+    private static final String MOVIE_DATA_URL =
+            "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         lvMovies = (ListView) findViewById(R.id.lvMovies);
         moviesData = new ArrayList<MovieData>();
         movieAdapter = new MovieArrayAdapter(this, moviesData);
         lvMovies.setAdapter(movieAdapter);
+
         lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long id){
@@ -42,9 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
+
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new JsonHttpResponseHandler(){
+        client.get(MOVIE_DATA_URL, new JsonHttpResponseHandler(){
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -57,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            public void onFailure(int statusCode, Header[] headers, String responseString,
+                                  Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
+ * Class modelling movie data
  * Created by dharinic on 9/13/17.
  */
 
@@ -20,15 +21,19 @@ public class MovieData implements Parcelable{
         ROTTEN
     }
 
-    String posterPath;
-    String backdropPath;
-    String originalTitle;
-    String overview;
-    String releaseDate;
-    Double voteAverage;
-    Popularity popularity;
+    private String posterPath;
+    private String backdropPath;
+    private String originalTitle;
+    private String overview;
+    private String releaseDate;
+    private Double voteAverage;
+    private Popularity popularity;
+
+    //Threshold to indicate if movie is ripe or rotten
+    private static final Double POPULARITY_MIN_VOTE = 6.0;
+
+    //Scaling factor to display rating out of 5 stars
     public static final Double VOTE_SCALING = 2.0;
-    static final Double POPULARITY_MIN_VOTE = 6.0;
 
     public MovieData(JSONObject jsonObject) throws JSONException{
         this.posterPath = jsonObject.getString("poster_path");

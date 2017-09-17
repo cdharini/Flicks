@@ -29,11 +29,13 @@ public class MovieDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+
         ivPoster = (ImageView) findViewById(R.id.ivPoster);
         tvMovieTitle = (TextView) findViewById(R.id.tvMovieTitle);
         tvSynopsis = (TextView) findViewById(R.id.tvSynopsis);
         rbRatings = (RatingBar) findViewById(R.id.rbRatings);
         tvReleaseDate = (TextView) findViewById(R.id.tvReleaseDate);
+
         MovieData movieData = getIntent().getExtras().getParcelable(MOVIE_DATA_EXTRA);
 
         Picasso.with(this).load(movieData.getPosterPath())

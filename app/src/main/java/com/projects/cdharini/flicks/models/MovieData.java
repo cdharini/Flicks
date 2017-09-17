@@ -1,5 +1,8 @@
 package com.projects.cdharini.flicks.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  * Created by dharinic on 9/13/17.
  */
 
-public class MovieData {
+public class MovieData implements Parcelable{
 
     public enum Popularity {
         RIPE,
@@ -22,8 +25,9 @@ public class MovieData {
     String originalTitle;
     String overview;
     String releaseDate;
-    Double vote_average;
+    Double voteAverage;
     Popularity popularity;
+    public static final Double VOTE_SCALING = 2.0;
     static final Double POPULARITY_MIN_VOTE = 6.0;
 
     public MovieData(JSONObject jsonObject) throws JSONException{
@@ -32,8 +36,8 @@ public class MovieData {
         this.overview = jsonObject.getString("overview");
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.releaseDate = jsonObject.getString("release_date");
-        this.vote_average = jsonObject.getDouble("vote_average");
-        popularity = (vote_average > POPULARITY_MIN_VOTE) ? Popularity.RIPE : Popularity.ROTTEN;
+        this.voteAverage = jsonObject.getDouble("vote_average");
+        popularity = (voteAverage > POPULARITY_MIN_VOTE) ? Popularity.RIPE : Popularity.ROTTEN;
     }
 
     public static ArrayList<MovieData> fromJSONArray(JSONArray array) {
@@ -46,6 +50,14 @@ public class MovieData {
             }
         }
         return movieResults;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
     }
 
     public String getPosterPath() {
@@ -70,5 +82,41 @@ public class MovieData {
 
     public Popularity getPopularity() {
         return popularity;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(posterPath);
+        out.writeString(backdropPath);
+        out.writeString(originalTitle);
+        out.writeString(overview);
+        out.writeString(releaseDate);
+        out.writeDouble(voteAverage);
+        out.writeInt(popularity.ordinal());
+    }
+
+    public static final Parcelable.Creator<MovieData> CREATOR
+            = new Parcelable.Creator<MovieData>() {
+        public MovieData createFromParcel(Parcel in) {
+            return new MovieData(in);
+        }
+
+        public MovieData[] newArray(int size) {
+            return new MovieData[size];
+        }
+    };
+
+    private MovieData(Parcel in) {
+        posterPath = in.readString();
+        backdropPath = in.readString();
+        originalTitle = in.readString();
+        overview = in.readString();
+        releaseDate = in.readString();
+        voteAverage = in.readDouble();
+        popularity = Popularity.values()[in.readInt()];
     }
 }

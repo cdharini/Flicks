@@ -1,7 +1,10 @@
 package com.projects.cdharini.flicks.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -30,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
         moviesData = new ArrayList<MovieData>();
         movieAdapter = new MovieArrayAdapter(this, moviesData);
         lvMovies.setAdapter(movieAdapter);
+        lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long id){
+                Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+                MovieData movie = movieAdapter.getItem(position);
+                intent.putExtra(MovieDetailActivity.MOVIE_DATA_EXTRA, movie);
+                startActivity(intent);
+            }
+        });
         String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new JsonHttpResponseHandler(){

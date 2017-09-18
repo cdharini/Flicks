@@ -2,7 +2,7 @@
 
 **Flicks** shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **10** hours spent in total
+Time spent: **12** hours spent in total
 
 ## User Stories
 
@@ -23,10 +23,9 @@ The following **bonus** features are implemented:
 * [x] Improve the user interface through styling and coloring.
 * [x] Allow user to view details of the movie including ratings and popularity within a separate activity or dialog fragment.
 * [x] When viewing a popular movie (i.e. a movie voted for more than 5 stars) the video should show the full backdrop image as the layout.  Uses [Heterogenous ListViews](http://guides.codepath.com/android/Implementing-a-Heterogenous-ListView) or [Heterogenous RecyclerView](http://guides.codepath.com/android/Heterogenous-Layouts-inside-RecyclerView) to show different layouts.
-* [ ] Allow video trailers to be played in full-screen using the YouTubePlayerView.
-    * [ ] Overlay a play icon for videos that can be played.
-    * [ ] More popular movies should start a separate activity that plays the video immediately.
-    * [ ] Less popular videos rely on the detail page should show ratings and a YouTube preview.
+* [x] Allow video posts to be played in full-screen using the YouTubePlayerView
+  * [x] When clicking on a popular movie (i.e. a movie voted for more than 5 stars) the video should be played immediately.
+  * [x] Less popular videos rely on the detailed page should show an image preview that can initiate playing a YouTube video.
 * [ ] Add a play icon overlay to popular movies to indicate that the movie can be played.
 * [ ] Apply the popular [Butterknife annotation library](http://guides.codepath.com/android/Reducing-View-Boilerplate-with-Butterknife) to reduce boilerplate code.
 * [x] Apply rounded corners for the poster or background images using [Picasso transformations](https://guides.codepath.com/android/Displaying-Images-with-the-Picasso-Library#other-transformations)
@@ -36,7 +35,7 @@ The following **bonus** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![Video walkthrough] (./flicks-3.gif)
+![Video walkthrough](flicks-4.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

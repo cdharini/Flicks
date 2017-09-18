@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long id){
-                Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
                 MovieData movie = movieAdapter.getItem(position);
+                Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
                 intent.putExtra(MovieDetailActivity.MOVIE_DATA_EXTRA, movie);
                 startActivity(intent);
             }

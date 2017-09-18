@@ -27,6 +27,7 @@ public class MovieData implements Parcelable{
     private String overview;
     private String releaseDate;
     private Double voteAverage;
+    private int movieId;
     private Popularity popularity;
 
     //Threshold to indicate if movie is ripe or rotten
@@ -42,6 +43,7 @@ public class MovieData implements Parcelable{
         this.backdropPath = jsonObject.getString("backdrop_path");
         this.releaseDate = jsonObject.getString("release_date");
         this.voteAverage = jsonObject.getDouble("vote_average");
+        this.movieId = jsonObject.getInt("id");
         popularity = (voteAverage > POPULARITY_MIN_VOTE) ? Popularity.RIPE : Popularity.ROTTEN;
     }
 
@@ -81,6 +83,10 @@ public class MovieData implements Parcelable{
         return originalTitle;
     }
 
+    public int getMovieId() {
+        return movieId;
+    }
+
     public String getOverview() {
         return overview;
     }
@@ -102,6 +108,7 @@ public class MovieData implements Parcelable{
         out.writeString(releaseDate);
         out.writeDouble(voteAverage);
         out.writeInt(popularity.ordinal());
+        out.writeInt(movieId);
     }
 
     public static final Parcelable.Creator<MovieData> CREATOR
@@ -123,5 +130,6 @@ public class MovieData implements Parcelable{
         releaseDate = in.readString();
         voteAverage = in.readDouble();
         popularity = Popularity.values()[in.readInt()];
+        movieId = in.readInt();
     }
 }

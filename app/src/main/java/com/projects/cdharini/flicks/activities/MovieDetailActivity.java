@@ -2,7 +2,6 @@ package com.projects.cdharini.flicks.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -27,7 +26,6 @@ import cz.msebera.android.httpclient.Header;
 public class MovieDetailActivity extends YouTubeBaseActivity {
     public static final String MOVIE_DATA_EXTRA = "extraMovieData";
 
-    private ImageView ivPoster;
     private YouTubePlayerView pvTrailer;
     private TextView tvMovieTitle;
     private TextView tvSynopsis;
@@ -43,7 +41,6 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-       // ivPoster = (ImageView) findViewById(R.id.ivPoster);
         tvMovieTitle = (TextView) findViewById(R.id.tvMovieTitle);
         tvSynopsis = (TextView) findViewById(R.id.tvSynopsis);
         rbRatings = (RatingBar) findViewById(R.id.rbRatings);
@@ -53,13 +50,6 @@ public class MovieDetailActivity extends YouTubeBaseActivity {
         final MovieData movieData = getIntent().getExtras().getParcelable(MOVIE_DATA_EXTRA);
 
         videoURL = String.format(videoURLFormat, movieData.getMovieId());
-
-
-        /*Picasso.with(this).load(movieData.getPosterPath())
-                .placeholder(R.mipmap.placeholder_img)
-                .fit().centerInside()
-                .transform(new RoundedCornersTransformation(10, 10))
-                .error(R.mipmap.placeholder_error_img).into(ivPoster);*/
 
         tvMovieTitle.setText(movieData.getOriginalTitle());
         tvReleaseDate.setText(movieData.getReleaseDate());

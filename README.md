@@ -35,7 +35,7 @@ The following **bonus** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![Video walkthrough](flicks-4.gif)
+![Video walkthrough](flicks-5.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
